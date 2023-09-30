@@ -166,13 +166,13 @@ class PerrohtImpl {
     max_load_factor_ = std::move(other.max_load_factor_);
     hasher_ = std::move(other.hasher_);
     key_equal_ = std::move(other.key_equal_);
-    constexpr const auto propagate_alloc = typename AllocTraits<
-        Allocator>::propagate_on_container_move_assignment();
-    if constexpr (propagate_alloc) {
+    using propagate_alloc =
+        typename AllocTraits<Allocator>::propagate_on_container_move_assignment;
+    if constexpr (std::is_same_v<propagate_alloc, std::true_type>) {
       allocator_ = std::move(other.allocator_);
     }
 
-    if (propagate_alloc || allocator_ == other.allocator_) {
+    if (propagate_alloc() || allocator_ == other.allocator_) {
       // As other's allocator was propagated or the same as the current one,
       // we can just move the data.
       mean_probe_distance_ = std::move(other.mean_probe_distance_);
