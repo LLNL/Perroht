@@ -316,7 +316,8 @@ class PerrohtImpl {
     return pLocate(key).second ? 1 : 0;
   }
 
-  inline Iterator Find(const KeyType& key) {
+  template<typename K>
+  inline Iterator Find(const K& key) {
     const auto [pos, found] = pLocate(key);
     if (!found) {
       return End();
@@ -324,7 +325,8 @@ class PerrohtImpl {
     return Iterator(pos, this);
   }
 
-  inline ConstIterator Find(const KeyType& key) const {
+  template<typename K>
+  inline ConstIterator Find(const K& key) const {
     const auto [pos, found] = pLocate(key);
     if (!found) {
       return End();
@@ -551,7 +553,8 @@ class PerrohtImpl {
 
   /// Calculate the ideal position for the given key,
   /// i.e. probe distance is 0 at an ideal position.
-  inline SizeType pIdealPosition(const KeyType& key) const {
+  template<typename K>
+  inline SizeType pIdealPosition(const K& key) const {
     const auto hash = hasher_(key);
     if constexpr (std::is_same_v<CapacityAlgo, PowerOfTwoCapacity>) {
       assert(Capacity() > 0);
@@ -685,7 +688,8 @@ class PerrohtImpl {
   /// If multiple entries are found, return the first one.
   /// If no entry is found, return the position where the entry should be
   /// inserted.
-  std::pair<SizeType, bool> pLocate(const KeyType& key) const {
+  template<typename K>
+  std::pair<SizeType, bool> pLocate(const K& key) const {
     if (Capacity() == 0) {
       return {Capacity(), false};  // not found
     }

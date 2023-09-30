@@ -266,7 +266,8 @@ class Perroht {
   /// \return An iterator to the element with the given key.
   /// If no such element exists, End() is returned.
   /// If multiple elements with the given key exist, the first one is returned.
-  inline Iterator Find(const KeyType& key) { return impl_.Find(key); }
+  template <typename K>
+  inline Iterator Find(const K& key) { return impl_.Find(key); }
 
   /// \brief Find the element with the given key.
   /// This is a const version of find().
@@ -274,7 +275,8 @@ class Perroht {
   /// \return An iterator to the element with the given key.
   /// If no such element exists, End() is returned.
   /// If multiple elements with the given key exist, the first one is returned.
-  inline ConstIterator Find(const KeyType& key) const {
+  template <typename K>
+  inline ConstIterator Find(const K& key) const {
     return impl_.Find(key);
   }
 

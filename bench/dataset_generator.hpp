@@ -257,7 +257,7 @@ void GenMixedEraseStringDataset(const std::size_t num_operations,
     if (insert) {
       const auto& elem = tmp_vec[insert_pos];
       vec.emplace_back(elem, false);  // insert request
-      erase_queue.emplace(perroht::StringHash<std::string, HashSeed>{}(elem),
+      erase_queue.emplace(perroht::StringHash<HashSeed>{}(elem),
                           insert_pos);
       ++insert_pos;
     } else {
