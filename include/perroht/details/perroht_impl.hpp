@@ -166,7 +166,7 @@ class PerrohtImpl {
     max_load_factor_ = std::move(other.max_load_factor_);
     hasher_ = std::move(other.hasher_);
     key_equal_ = std::move(other.key_equal_);
-    constexpr auto propagate_alloc = typename AllocTraits<
+    constexpr const bool propagate_alloc = typename AllocTraits<
         Allocator>::propagate_on_container_move_assignment();
     if constexpr (propagate_alloc) {
       allocator_ = std::move(other.allocator_);
