@@ -83,8 +83,7 @@ FORCE_INLINE uint64_t fmix64(uint64_t k) {
 
 //-----------------------------------------------------------------------------
 
-inline void MurmurHash3_x86_32(const void *key, int len, uint32_t seed,
-                               void *out) {
+inline void MurmurHash3_x86_32(const void *key, int len, uint32_t seed, void *out) {
   const uint8_t *data = (const uint8_t *)key;
   const int nblocks = len / 4;
 
@@ -145,7 +144,7 @@ inline void MurmurHash3_x86_32(const void *key, int len, uint32_t seed,
 //-----------------------------------------------------------------------------
 
 inline void MurmurHash3_x86_128(const void *key, const int len, uint32_t seed,
-                                void *out) {
+                         void *out) {
   const uint8_t *data = (const uint8_t *)key;
   const int nblocks = len / 16;
 
@@ -318,8 +317,8 @@ inline void MurmurHash3_x86_128(const void *key, const int len, uint32_t seed,
 
 //-----------------------------------------------------------------------------
 
-inline void MurmurHash3_x64_128(const void *key, const int len,
-                                const uint32_t seed, void *out) {
+inline void MurmurHash3_x64_128(const void *key, const int len, const uint32_t seed,
+                         void *out) {
   const uint8_t *data = (const uint8_t *)key;
   const int nblocks = len / 16;
 
@@ -461,15 +460,14 @@ struct Hash {
 /// \brief Hash string data.
 /// \tparam string_type A string class.
 /// \tparam seed A seed value used for hashing.
-template <uint32_t seed = 123>
+template <typename string_type, uint32_t seed = 123>
 struct StringHash {
-  template <typename StringType>
-  inline uint64_t operator()(const StringType &key) const noexcept {
+  inline uint64_t operator()(const string_type &key) const noexcept {
     static_assert(sizeof(void *) == 8, "64-bit only");
 
     uint64_t hash[2];
     perroht::hsdtl::MurmurHash3_x64_128(
-        key.c_str(), key.length() * sizeof(typename StringType::value_type),
+        key.data(), key.length() * sizeof(typename string_type::value_type),
         seed, hash);
     return hash[0];
   }
