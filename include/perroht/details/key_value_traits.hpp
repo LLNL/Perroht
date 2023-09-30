@@ -21,8 +21,8 @@ struct KeyValueTraits {
       typename std::conditional<embed, std::pair<KeyType, ValueType>,
                                 std::pair<const KeyType, ValueType>>::type;
 
-  static constexpr const KeyType& GetKey(
-      const KeyValueType& key_value) noexcept {
+  template <typename KV>
+  static constexpr const auto& GetKey(const KV& key_value) noexcept {
     return key_value.first;
   }
 };
@@ -33,8 +33,8 @@ struct KeyValueTraits<Key, VoidValue, embed> {
   using ValueType = VoidValue;
   using KeyValueType = KeyType;
 
-  static constexpr const KeyType& GetKey(
-      const KeyValueType& key_value) noexcept {
+  template <typename KV>
+  static constexpr const auto& GetKey(const KV& key_value) noexcept {
     return key_value;
   }
 };

@@ -170,9 +170,11 @@ class basic_unordered_map {
 
   size_type count(const Key& key) const { return impl_.Count(key); }
 
-  iterator find(const Key& key) { return impl_.Find(key); }
+  template<typename K>
+  iterator find(const K& key) { return impl_.Find(key); }
 
-  const_iterator find(const Key& key) const { return impl_.Find(key); }
+  template<typename K>
+  const_iterator find(const K& key) const { return impl_.Find(key); }
 
   bool contains(const Key& key) const { return impl_.Contains(key); }
 
