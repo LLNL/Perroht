@@ -11,7 +11,7 @@ namespace perroht {
 struct StringEqual {
   template <typename S1, typename S2>
   bool operator()(const S1& lhs, const S2& rhs) const {
-    return lhs.compare(0, lhs.size(), rhs.c_str(), rhs.size()) == 0;
+    return lhs.compare(0, lhs.size(), rhs.data(), rhs.size()) == 0;
   }
 };
 
