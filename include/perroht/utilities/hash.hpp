@@ -467,7 +467,7 @@ struct StringHash {
 
     uint64_t hash[2];
     perroht::hsdtl::MurmurHash3_x64_128(
-        key.c_str(), key.length() * sizeof(typename string_type::value_type),
+        key.data(), key.length() * sizeof(typename string_type::value_type),
         seed, hash);
     return hash[0];
   }
