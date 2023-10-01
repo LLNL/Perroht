@@ -1,0 +1,20 @@
+name: Perroht CI Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      CC: gcc-12
+      CXX: g++-12
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and test
+        run: |
+          cd $GITHUB_WORKSPACE
+          mkdir build
+          cd build
+          cmake ../ -DBUILD_TEST=ON -DBUILD_PERSISTENT_ALLOCATOR_TEST=ON
+          make -j6
+          make test
